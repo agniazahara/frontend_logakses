@@ -1,7 +1,7 @@
 /* =========================
    API BASE URL
 ========================= */
-const API = "https://backend-logakses.vercel.app"
+const API = "https://backendlogakses-production.up.railway.app"
 
 /* =========================
    CEK LOGIN
