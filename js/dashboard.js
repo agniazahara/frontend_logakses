@@ -409,6 +409,41 @@ function showPage(pageId, el) {
 }
 }
 
+function showTambahAdminModal() {
+
+  const username = prompt("Masukkan username admin baru")
+
+  if (!username) return
+
+  const password = prompt("Masukkan password admin baru")
+
+  if (!password) return
+
+  fetch(`${API}/auth/admins`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username,
+      password
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    alert("Admin berhasil ditambahkan")
+
+    loadAdmin()
+
+  })
+  .catch(err => {
+    console.log(err)
+    alert("Gagal tambah admin")
+  })
+
+}
+
 /* =========================
    DOWNLOAD EXCEL
 ========================= */
