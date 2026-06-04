@@ -432,14 +432,34 @@ function showTambahAdminModal() {
   .then(res => res.json())
   .then(data => {
 
-    alert("Admin berhasil ditambahkan")
+    if (data.success) {
 
-    loadAdmin()
+      showToast(
+        "Data admin berhasil ditambahkan",
+        "success"
+      )
+
+      loadAdmin()
+
+    } else {
+
+      showToast(
+        "Gagal menambahkan admin",
+        "error"
+      )
+
+    }
 
   })
   .catch(err => {
+
     console.log(err)
-    alert("Gagal tambah admin")
+
+    showToast(
+      "Gagal menambahkan admin",
+      "error"
+    )
+
   })
 
 }
