@@ -404,8 +404,9 @@ function showPage(pageId, el) {
   }
 
   if (pageId === "pengaturan") {
-    judul.textContent = "Pengaturan"
-  }
+  judul.textContent = "Pengaturan"
+  loadAdmin()
+}
 }
 
 /* =========================
@@ -564,5 +565,33 @@ function filterTamu() {
         : "none"
 
   })
+
+}
+
+function loadAdmin() {
+
+  fetch(`${API}/auth/admins`)
+    .then(res => res.json())
+    .then(data => {
+
+      let html = ""
+
+      data.forEach(admin => {
+
+        html += `
+          <tr>
+            <td>${admin.id}</td>
+            <td>${admin.username}</td>
+            <td>
+              <button>Hapus</button>
+            </td>
+          </tr>
+        `
+
+      })
+
+      document.getElementById("tabel-admin").innerHTML = html
+
+    })
 
 }
