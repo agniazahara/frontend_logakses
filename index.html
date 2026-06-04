@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Railtrace - Sistem Log Akses Tamu</title>
+
+  <meta name="description" content="Sistem monitoring dan log akses tamu berbasis web">
+  <meta name="keywords" content="railtrace, log akses, tamu, sistem monitoring">
+  <meta name="author" content="Railtrace">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- FAVICON -->
+<link rel="icon" type="image/png" href="/logo.png?v=1">
+<link rel="shortcut icon" href="./logo.png">
+<link rel="apple-touch-icon" href="./logo.png">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="card">
+
+      <img src="logo.png" class="logo">
+
+      <h1>Selamat Datang di <span>Railtrace</span></h1>
+
+      <p class="subtitle">
+        Masuk ke akun admin untuk melanjutkan
+      </p>
+
+      <form id="loginForm">
+
+        <div class="input-group">
+          <label>Username</label>
+
+          <input
+            type="text"
+            placeholder="Masukkan username"
+            required
+          >
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+
+          <input
+            type="password"
+            placeholder="Masukkan password"
+            required
+          >
+        </div>
+
+        <p id="errorMsg" class="error"></p>
+
+        <button type="submit">
+          Masuk
+        </button>
+
+      </form>
+
+      <p class="footer">
+        © 2026 Created by IT Divre 4
+      </p>
+
+    </div>
+
+  </div>
+
+<script>
+
+const API =
+  "https://backendlogakses-production.up.railway.app"
+
+const form =
+  document.getElementById("loginForm")
+
+const errorMsg =
+  document.getElementById("errorMsg")
+
+/* =========================
+   CEK SUDAH LOGIN
+========================= */
+if (localStorage.getItem("isLogin") === "true") {
+  window.location.href = "dashboard.html"
+}
+
+/* =========================
+   LOGIN
+========================= */
+form.addEventListener("submit", async function(e) {
+
+  e.preventDefault()
+
+  const username =
+    form.querySelector('input[type="text"]').value
+
+  const password =
+    form.querySelector('input[type="password"]').value
+
+  try {
+
+    const res = await fetch(`${API}/auth/login`, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        username,
+        password
+      })
+
+    })
+
+    const data = await res.json()
+
+    if (data.success) {
+
+      localStorage.setItem("isLogin", "true")
+
+      window.location.replace("dashboard.html")
+
+    } else {
+
+      errorMsg.textContent =
+        "Username atau password salah!"
+
+    }
+
+  } catch (err) {
+
+    console.log(err)
+
+    errorMsg.textContent =
+      "Server tidak dapat diakses"
+
+  }
+
+})
+
+/* =========================
+   HAPUS ERROR SAAT NGETIK
+========================= */
+form.addEventListener("input", function() {
+
+  errorMsg.textContent = ""
+
+})
+
+/* =========================
+   BLOCK BACK BUTTON
+========================= */
+window.history.pushState(null, "", window.location.href)
+
+window.onpopstate = function () {
+  window.history.pushState(null, "", window.location.href)
+}
+
+</script>
+
+</body>
+</html>

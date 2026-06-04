@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Railtrace</title>
+
+<link rel="stylesheet" href="css/dashboard.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="brand">
+      <img src="logo.png" class="brand-logo">
+    </div>
+
+    <!-- UTAMA -->
+    <div class="menu-title">UTAMA</div>
+
+    <ul>
+      <li onclick="showPage('home', this)" class="active">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+      </li>
+    </ul>
+
+    <!-- DATA TAMU -->
+    <div class="menu-title">DATA TAMU</div>
+
+    <ul>
+      <li onclick="showPage('riwayat', this)">
+  <i class="fa-solid fa-clock-rotate-left"></i>
+  <span>Riwayat Tamu</span>
+</li>
+
+      <li onclick="showPage('form', this)">
+        <i class="fa-solid fa-user-plus"></i>
+        <span>Tambah Tamu</span>
+      </li>
+    </ul>
+
+    <!-- SISTEM -->
+    <div class="menu-title">SISTEM</div>
+
+    <ul>
+
+      <li onclick="showPage('pengaturan')">
+        <i class="fa-solid fa-gear"></i>
+        <span>Pengaturan</span>
+      </li>
+
+      <li onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+      </li>
+
+    </ul>
+
+    <!-- PROFILE -->
+    <div class="profile-box">
+
+      <div class="avatar">
+        AD
+      </div>
+
+      <div class="user-text">
+        <h4>Admin</h4>
+        <p>Administrator</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+
+      <h2 id="judul">Beranda</h2>
+
+      <div class="top-right">
+
+        <div class="theme-btn" onclick="toggleDarkMode()">
+          <i class="fa-solid fa-moon"></i>
+        </div>
+
+        <!-- DROPDOWN -->
+        <div class="admin-menu">
+
+          <div class="mini-avatar" onclick="toggleMenu()">
+            AD
+          </div>
+
+          <div class="dropdown-menu" id="dropdownMenu">
+
+            <p class="drop-name">Admin</p>
+            <hr>
+
+            <a href="#" onclick="showPage('pengaturan')">
+              Profil
+            </a>
+
+            <a href="#" onclick="showPasswordModal()">
+  Ganti Password
+</a>
+
+            <a href="#" onclick="logout()">
+              Logout
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- HOME -->
+    <div id="home" class="page">
+
+      <!-- HERO -->
+      <div class="hero-box">
+
+        <div>
+          <h2>Selamat Datang, Admin</h2>
+
+          <p>
+            Sistem monitoring akses tamu aktif dan berjalan normal hari ini.
+          </p>
+        </div>
+
+        <div class="hero-time" id="clock"></div>
+
+      </div>
+
+      <!-- STATISTIK -->
+      <div class="stats-row">
+
+        <div class="mini-card">
+          <h4>Total Tamu</h4>
+          <p id="totalTamu">0</p>
+        </div>
+
+        <div class="mini-card">
+          <h4>Hari Ini</h4>
+          <p id="tamuHariIni">0</p>
+        </div>
+
+        <div class="mini-card">
+          <h4>Di Dalam</h4>
+          <p id="diDalam">0</p>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM -->
+      <div class="bottom-grid">
+
+        <!-- CHART -->
+<div class="panel-box">
+
+  <h3>Statistik Tamu</h3>
+
+  <div class="fake-chart" id="statistikChart"></div>
+
+  <div class="chart-label" id="chartLabel"></div>
+
+</div>
+
+        <!-- LAPORAN -->
+        <div class="panel-box">
+
+         <h3>Laporan Bulanan</h3>
+
+<div id="laporanBulanan"></div>
+
+<button class="download-btn" onclick="downloadExcel()">
+  Download Rekap
+</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIWAYAT -->
+    <div id="riwayat" class="page" style="display:none;">
+
+      <div class="table-box">
+
+        <div class="table-header">
+
+  <div>
+    <h3>Riwayat Data Tamu</h3>
+    <p>Seluruh data kunjungan tamu tersimpan di sistem</p>
+  </div>
+
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Cari nama / asal / keperluan..."
+    onkeyup="filterTamu()"
+    style="
+      padding:10px 14px;
+      border-radius:10px;
+      border:none;
+      outline:none;
+      width:260px;
+    "
+  >
+
+</div>
+
+        <table width="100%">
+
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nama</th>
+              <th>NIP / NIPP</th>
+              <th>Asal</th>
+              <th>Keperluan</th>
+              <th>No HP</th>
+              <th>Masuk</th>
+              <th>Keluar</th>
+              <th>Status</th>
+              <th>Foto</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody id="tabel-tamu"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+    <!-- FORM -->
+    <div id="form" class="page" style="display:none;">
+
+      <div class="form-card">
+
+        <div class="form-header">
+          <h3>Tambah Data Tamu</h3>
+
+          <p>
+            Lengkapi informasi tamu yang akan masuk area kerja
+          </p>
+        </div>
+
+        <div class="grid-form">
+
+          <div class="input-group">
+            <label>Nama Lengkap</label>
+
+            <input
+              type="text"
+              id="namaTamu"
+              placeholder="Masukkan nama tamu"
+            >
+          </div>
+
+          <div class="input-group">
+            <label>NIP / NIPP</label>
+
+            <input
+              type="text"
+              id="nipTamu"
+              placeholder="Masukkan NIP/NIPP"
+            >
+          </div>
+
+          <div class="input-group">
+            <label>Asal Tamu</label>
+
+            <input
+              type="text"
+              id="asalTamu"
+              placeholder="Unit / Kantor / Stasiun"
+            >
+          </div>
+
+          <div class="input-group">
+            <label>Nomor HP</label>
+
+            <input
+              type="text"
+              id="hpTamu"
+              placeholder="08xxxxxxxxxx"
+            >
+          </div>
+
+          <!-- KEPERLUAN -->
+          <div class="input-group">
+
+            <label>Keperluan</label>
+
+            <select id="keperluanTamu" onchange="handleKeperluan()">
+
+              <option value="" disabled selected hidden>
+                Pilih keperluan
+              </option>
+
+              <option value="Monitoring">
+                Monitoring / Pengecekan
+              </option>
+
+              <option value="Maintenance">
+                Maintenance Server
+              </option>
+
+              <option value="Perbaikan">
+                Perbaikan / Troubleshooting
+              </option>
+
+              <option value="Instalasi">
+                Instalasi / Pemasangan
+              </option>
+
+              <option value="Audit">
+                Audit / Inspeksi
+              </option>
+
+              <option value="Kunjungan">
+                Kunjungan
+              </option>
+
+              <option value="Lainnya">
+                Lainnya
+              </option>
+
+            </select>
+
+          </div>
+
+          <div class="input-group">
+
+            <label>Email</label>
+
+            <input
+              type="email"
+              id="emailTamu"
+              placeholder="email@contoh.com"
+            >
+
+          </div>
+
+          <!-- DETAIL -->
+          <div
+            class="input-group full"
+            id="deskripsiBox"
+            style="display:none;"
+          >
+
+            <label>Detail Keperluan (Opsional)</label>
+
+            <input
+              type="text"
+              id="deskripsiTamu"
+              placeholder="Contoh: Cek rack server / instalasi switch / audit keamanan"
+            >
+
+          </div>
+
+          <!-- FOTO -->
+          <div class="input-group full">
+
+            <label>Upload Foto</label>
+
+            <input
+              type="file"
+              id="fotoTamu"
+              accept="image/*"
+              capture="environment"
+            >
+
+          </div>
+
+        </div>
+
+        <button
+          id="btnSimpan"
+          class="save-btn"
+          onclick="simpanTamu()"
+        >
+          Simpan Data Tamu
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- PENGATURAN -->
+    <div id="pengaturan" class="page" style="display:none;">
+
+      <div class="setting-card">
+
+        <div class="setting-header">
+          <h3>Pengaturan Akun</h3>
+          <p>Informasi administrator sistem</p>
+        </div>
+
+        <div class="profile-setting">
+
+          <div class="big-avatar">
+            AD
+          </div>
+
+          <h2>Admin</h2>
+
+          <span>Administrator</span>
+
+          <div class="setting-info">
+
+            <div class="info-item">
+              <label>Username</label>
+              <p>admin</p>
+            </div>
+
+            <div class="info-item">
+              <label>Status</label>
+              <p>Active</p>
+            </div>
+
+          </div>
+
+          <button
+            class="logout-setting-btn"
+            onclick="logout()"
+          >
+            Logout
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MODAL EDIT -->
+<div class="modal" id="editModal">
+
+  <div class="modal-box">
+
+    <h3>Edit Data Tamu</h3>
+
+    <input type="hidden" id="editId">
+
+    <div class="input-group">
+      <label>Nama Lengkap</label>
+      <input type="text" id="editNama">
+    </div>
+
+    <div class="input-group">
+      <label>NIP / NIPP</label>
+      <input type="text" id="editNip">
+    </div>
+
+    <div class="input-group">
+      <label>Asal Tamu</label>
+      <input type="text" id="editAsal">
+    </div>
+
+    <div class="input-group">
+      <label>Nomor HP</label>
+      <input type="text" id="editHp">
+    </div>
+
+    <div class="input-group">
+      <label>Email</label>
+      <input type="email" id="editEmail">
+    </div>
+
+    <div class="input-group">
+      <label>Keperluan</label>
+      <input type="text" id="editKeperluan">
+    </div>
+
+    <div class="modal-btn">
+
+      <button class="btn-save" onclick="simpanEdit()">
+        Simpan
+      </button>
+
+      <button class="btn-close" onclick="tutupModal()">
+        Batal
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<!-- FOTO -->
+<div class="modal" id="fotoModal">
+
+  <div class="modal-box">
+
+    <h3>Foto Tamu</h3>
+
+    <img
+      id="previewFoto"
+      src=""
+      style="
+        width:100%;
+        border-radius:12px;
+        margin-top:10px;
+      "
+    >
+
+    <div class="modal-btn">
+
+      <button class="btn-close" onclick="tutupFoto()">
+        Tutup
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- MODAL PASSWORD -->
+<div class="modal" id="passwordModal">
+
+  <div class="modal-box">
+
+    <h3>Ganti Password</h3>
+
+    <div class="input-group">
+      <label>Password Lama</label>
+      <input type="password" id="oldPassword">
+    </div>
+
+    <div class="input-group">
+      <label>Password Baru</label>
+      <input type="password" id="newPassword">
+    </div>
+
+    <div class="modal-btn">
+
+      <button
+        class="btn-save"
+        onclick="changePassword()"
+      >
+        Simpan
+      </button>
+
+      <button
+        class="btn-close"
+        onclick="closePasswordModal()"
+      >
+        Batal
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>
