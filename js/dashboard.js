@@ -638,7 +638,9 @@ function loadAdmin() {
             <td>${admin.id}</td>
             <td>${admin.username}</td>
             <td>
-              <button>Hapus</button>
+              <button onclick="hapusAdmin(${admin.id})">
+  Hapus
+</button>
             </td>
           </tr>
         `
@@ -648,5 +650,40 @@ function loadAdmin() {
       document.getElementById("tabel-admin").innerHTML = html
 
     })
+
+}
+
+function hapusAdmin(id) {
+
+  if (!confirm("Yakin hapus admin ini?")) return
+
+  fetch(`${API}/auth/admins/${id}`, {
+    method: "DELETE"
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    if (data.success) {
+
+      showToast(
+        "Admin berhasil dihapus",
+        "success"
+      )
+
+      loadAdmin()
+
+    }
+
+  })
+  .catch(err => {
+
+    console.log(err)
+
+    showToast(
+      "Gagal menghapus admin",
+      "error"
+    )
+
+  })
 
 }
