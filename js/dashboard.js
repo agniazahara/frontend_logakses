@@ -812,7 +812,7 @@ async function approvePermohonan(id) {
 async function rejectPermohonan(id) {
 
   console.log("REJECT ID:", id)
-  
+
   const yakin = confirm(
     "Yakin ingin menolak permohonan ini?"
   )
@@ -851,5 +851,14 @@ async function rejectPermohonan(id) {
     )
 
   }
+
+}
+
+function toggleSidebar(){
+
+  document
+    .querySelector(".sidebar")
+    .classList
+    .toggle("show")
 
 }

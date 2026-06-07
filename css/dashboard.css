@@ -1117,28 +1117,35 @@ body.dark .modal-box input {
   margin: 0 auto 25px auto;
 }
 
+.menu-btn{
+  display:none;
+}
+
 @media (max-width:768px){
 
-  .layout{
-    flex-direction:column;
+  .menu-btn{
+    display:block;
+    font-size:24px;
+    background:none;
+    border:none;
+    cursor:pointer;
   }
 
   .sidebar{
-    width:100%;
-    height:auto;
+    position:fixed;
+    left:-270px;
+    top:0;
+    z-index:999;
+    transition:.3s;
+  }
+
+  .sidebar.show{
+    left:0;
   }
 
   .main{
-    padding:10px;
-  }
-
-  .stats-row,
-  .bottom-grid{
-    flex-direction:column;
-  }
-
-  .table-box{
-    overflow-x:auto;
+    width:100%;
+    padding:15px;
   }
 
 }
