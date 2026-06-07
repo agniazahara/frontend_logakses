@@ -95,7 +95,7 @@ button{
 
 <div class="container">
 
-<div class="card">
+<div class="card" id="formCard">
 
 <h1>Form Registrasi Tamu</h1>
 
@@ -158,19 +158,25 @@ Kirim Permohonan
 
 <div id="status" class="status"></div>
 
+</div>
+
 <div id="statusPermohonan" style="display:none">
 
-  <h2>⏳ Permohonan Sedang Diproses</h2>
+  <div class="card">
 
-  <p>
-    Data Anda berhasil dikirim.
-  </p>
+    <h1>⏳ Menunggu Persetujuan</h1>
 
-  <p>
-    Silakan tunggu persetujuan dari admin.
-  </p>
+    <p class="subtitle">
+      Permohonan Anda berhasil dikirim
+    </p>
 
-</div>
+    <h2 id="namaPreview"></h2>
+
+    <p>
+      Silakan tunggu admin memverifikasi data Anda.
+    </p>
+
+  </div>
 
 </div>
 
@@ -244,8 +250,14 @@ async function kirimData(){
 
     if(data.success){
 
-      document.getElementById("status").innerHTML =
-        "⏳ Permohonan berhasil dikirim. Menunggu persetujuan admin."
+  document.getElementById("namaPreview").innerText =
+    document.getElementById("nama").value
+
+  document.getElementById("formCard").style.display =
+    "none"
+
+  document.getElementById("statusPermohonan").style.display =
+    "block"
 
     } else {
 
