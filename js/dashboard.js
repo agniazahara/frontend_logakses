@@ -16,6 +16,7 @@ if (localStorage.getItem("isLogin") !== "true") {
 function logout() {
 
   localStorage.removeItem("isLogin")
+  localStorage.removeItem("username")
 
   window.location.replace("index.html")
 }
@@ -555,10 +556,10 @@ async function changePassword() {
         },
 
         body: JSON.stringify({
-          username: "admin",
-          oldPassword,
-          newPassword
-        })
+  username: localStorage.getItem("username"),
+  oldPassword,
+  newPassword
+})
       }
     )
 

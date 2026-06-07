@@ -123,16 +123,16 @@ form.addEventListener("submit", async function(e) {
 
     if (data.success) {
 
-      localStorage.setItem("isLogin", "true")
+  localStorage.setItem("isLogin", "true")
 
-      window.location.replace("dashboard.html")
+  localStorage.setItem(
+    "username",
+    username
+  )
 
-    } else {
+  window.location.replace("dashboard.html")
 
-      errorMsg.textContent =
-        "Username atau password salah!"
-
-    }
+}
 
   } catch (err) {
 
