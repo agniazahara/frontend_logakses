@@ -164,19 +164,88 @@ Kirim Permohonan
 
 <script>
 
+const API =
+  "https://backendlogakses-production.up.railway.app"
+
 async function kirimData(){
 
-  document.getElementById("status").innerHTML =
-    "Permohonan sedang dikirim...";
-
-  // nanti POST ke API
-
-  setTimeout(() => {
+  try {
 
     document.getElementById("status").innerHTML =
-      "⏳ Data berhasil dikirim. Menunggu persetujuan admin.";
+      "Mengirim permohonan..."
 
-  },1000)
+    const formData = new FormData()
+
+    formData.append(
+      "nama",
+      document.getElementById("nama").value
+    )
+
+    formData.append(
+      "nip",
+      document.getElementById("nip").value
+    )
+
+    formData.append(
+      "asal_tamu",
+      document.getElementById("asal").value
+    )
+
+    formData.append(
+      "no_hp",
+      document.getElementById("hp").value
+    )
+
+    formData.append(
+      "email",
+      document.getElementById("email").value
+    )
+
+    formData.append(
+      "keperluan",
+      document.getElementById("keperluan").value
+    )
+
+    const foto =
+      document.getElementById("foto")
+
+    if (foto.files.length > 0) {
+      formData.append(
+        "foto",
+        foto.files[0]
+      )
+    }
+
+    const res = await fetch(
+      `${API}/tamu/permohonan`,
+      {
+        method:"POST",
+        body:formData
+      }
+    )
+
+    const data = await res.json()
+
+    if(data.success){
+
+      document.getElementById("status").innerHTML =
+        "⏳ Permohonan berhasil dikirim. Menunggu persetujuan admin."
+
+    } else {
+
+      document.getElementById("status").innerHTML =
+        "❌ Gagal mengirim permohonan"
+
+    }
+
+  } catch(err){
+
+    console.log(err)
+
+    document.getElementById("status").innerHTML =
+      "❌ Server tidak dapat diakses"
+
+  }
 
 }
 
