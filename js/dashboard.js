@@ -811,6 +811,8 @@ async function approvePermohonan(id) {
 
 async function rejectPermohonan(id) {
 
+  console.log("REJECT ID:", id)
+  
   const yakin = confirm(
     "Yakin ingin menolak permohonan ini?"
   )
