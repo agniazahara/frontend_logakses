@@ -777,3 +777,28 @@ async function loadPermohonan() {
   }
 
 }
+
+async function approvePermohonan(id) {
+
+  try {
+
+    const res = await fetch(
+      `${API}/tamu/permohonan/approve/${id}`,
+      {
+        method: "POST"
+      }
+    )
+
+    const data = await res.json()
+
+    console.log(data)
+
+    if (data.success) {
+      alert("Approve berhasil")
+    }
+
+  } catch (err) {
+    console.log(err)
+  }
+
+}
