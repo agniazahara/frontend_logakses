@@ -808,3 +808,46 @@ async function approvePermohonan(id) {
   }
 
 }
+
+async function rejectPermohonan(id) {
+
+  const yakin = confirm(
+    "Yakin ingin menolak permohonan ini?"
+  )
+
+  if (!yakin) return
+
+  try {
+
+    const res = await fetch(
+      `${API}/tamu/permohonan/reject/${id}`,
+      {
+        method: "POST"
+      }
+    )
+
+    const data = await res.json()
+
+    if (data.success) {
+
+      showToast(
+        "Permohonan berhasil ditolak",
+        "success"
+      )
+
+      loadPermohonan()
+
+    }
+
+  } catch(err) {
+
+    console.log(err)
+
+    showToast(
+      "Gagal menolak permohonan",
+      "error"
+    )
+
+  }
+
+}

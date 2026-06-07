@@ -82,13 +82,23 @@ async function cekStatus() {
 
     if (data.status === "DISETUJUI") {
 
-      document.getElementById("iconStatus").innerHTML =
-        "✅"
+  document.getElementById("iconStatus").innerHTML =
+    "✅"
 
-      document.getElementById("judulStatus").innerHTML =
-        "Permohonan Disetujui"
+  document.getElementById("judulStatus").innerHTML =
+    "Permohonan Disetujui"
 
-    }
+}
+
+if (data.status === "DITOLAK") {
+
+  document.getElementById("iconStatus").innerHTML =
+    "❌"
+
+  document.getElementById("judulStatus").innerHTML =
+    "Permohonan Ditolak"
+
+}
 
   } catch(err) {
     console.log(err)
