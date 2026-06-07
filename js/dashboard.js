@@ -420,6 +420,11 @@ function showPage(pageId, el) {
     judul.textContent = "Beranda"
   }
 
+  if (pageId === "permohonan") {
+    judul.textContent = "Permohonan Tamu"
+    loadPermohonan()
+  }
+
   if (pageId === "riwayat") {
     judul.textContent = "Riwayat Tamu"
     tampilkanTamu()
@@ -430,9 +435,10 @@ function showPage(pageId, el) {
   }
 
   if (pageId === "pengaturan") {
-  judul.textContent = "Pengaturan"
-  loadAdmin()
-}
+    judul.textContent = "Pengaturan"
+    loadAdmin()
+  }
+
 }
 
 function showTambahAdminModal() {
