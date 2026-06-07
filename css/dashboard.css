@@ -1117,3 +1117,28 @@ body.dark .modal-box input {
   margin: 0 auto 25px auto;
 }
 
+@media (max-width:768px){
+
+  .layout{
+    flex-direction:column;
+  }
+
+  .sidebar{
+    width:100%;
+    height:auto;
+  }
+
+  .main{
+    padding:10px;
+  }
+
+  .stats-row,
+  .bottom-grid{
+    flex-direction:column;
+  }
+
+  .table-box{
+    overflow-x:auto;
+  }
+
+}
