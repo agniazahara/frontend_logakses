@@ -46,9 +46,9 @@ h1{
 
 <div class="card">
 
-<div class="status">⏳</div>
+<div class="status" id="iconStatus">⏳</div>
 
-<h1>Menunggu Persetujuan</h1>
+<h1 id="judulStatus">Menunggu Persetujuan</h1>
 
 <p class="info">
 Permohonan Anda berhasil dikirim.
@@ -59,6 +59,48 @@ Silakan tunggu admin memverifikasi data Anda.
 </p>
 
 </div>
+
+<script>
+
+const API =
+  "https://backendlogakses-production.up.railway.app"
+
+const id =
+  localStorage.getItem("permohonanId")
+
+async function cekStatus() {
+
+  if (!id) return
+
+  try {
+
+    const res = await fetch(
+      `${API}/tamu/permohonan/status/${id}`
+    )
+
+    const data = await res.json()
+
+    if (data.status === "DISETUJUI") {
+
+      document.getElementById("iconStatus").innerHTML =
+        "✅"
+
+      document.getElementById("judulStatus").innerHTML =
+        "Permohonan Disetujui"
+
+    }
+
+  } catch(err) {
+    console.log(err)
+  }
+
+}
+
+setInterval(cekStatus, 5000)
+
+cekStatus()
+
+</script>
 
 </body>
 </html>

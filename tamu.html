@@ -248,6 +248,11 @@ async function kirimData(){
 
     const data = await res.json()
 
+    localStorage.setItem(
+  "permohonanId",
+  data.id
+)
+
     if(data.success){
 
   window.location.href = "status.html"
