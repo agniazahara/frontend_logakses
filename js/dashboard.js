@@ -59,6 +59,14 @@ window.onload = function () {
     document.body.classList.add("dark")
   }
 
+const username =
+  localStorage.getItem("username")
+
+if (username) {
+  document.getElementById("namaAdmin").textContent =
+    username
+}
+
   // LOAD DASHBOARD
   updateStatistik()
 
