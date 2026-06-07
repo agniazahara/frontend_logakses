@@ -719,3 +719,61 @@ function hapusAdmin(id) {
   })
 
 }
+
+async function loadPermohonan() {
+
+  try {
+
+    const res = await fetch(
+      `${API}/tamu/permohonan`
+    )
+
+    const data = await res.json()
+
+    let html = ""
+
+    data.forEach(item => {
+
+      html += `
+      <tr>
+        <td>${item.id}</td>
+        <td>${item.nama}</td>
+        <td>${item.nip || "-"}</td>
+        <td>${item.asal_tamu || "-"}</td>
+        <td>${item.keperluan}</td>
+        <td>${item.no_hp || "-"}</td>
+        <td>${item.email || "-"}</td>
+
+        <td>
+          ${
+            item.foto
+            ? `<button onclick="lihatFoto('${item.foto}')">Lihat</button>`
+            : "-"
+          }
+        </td>
+
+        <td>
+          <button onclick="approvePermohonan(${item.id})">
+            Approve
+          </button>
+
+          <button onclick="rejectPermohonan(${item.id})">
+            Reject
+          </button>
+        </td>
+      </tr>
+      `
+
+    })
+
+    document.getElementById(
+      "tabel-permohonan"
+    ).innerHTML = html
+
+  } catch(err) {
+
+    console.log(err)
+
+  }
+
+}
