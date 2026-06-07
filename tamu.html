@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Railtrace - Form Tamu</title>
+
+<link rel="icon" href="logo.png">
+
+<style>
+
+body{
+  margin:0;
+  background:#f5f7fb;
+  font-family:Arial,sans-serif;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+.card{
+  background:#fff;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+h1{
+  margin-bottom:10px;
+}
+
+.subtitle{
+  color:#666;
+  margin-bottom:30px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.input-group{
+  display:flex;
+  flex-direction:column;
+}
+
+.input-group.full{
+  grid-column:1 / -1;
+}
+
+label{
+  margin-bottom:8px;
+  font-weight:600;
+}
+
+input,
+select{
+  padding:15px;
+  border:1px solid #ddd;
+  border-radius:12px;
+}
+
+button{
+  margin-top:25px;
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:12px;
+  background:#2563eb;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+.status{
+  text-align:center;
+  margin-top:20px;
+  font-weight:bold;
+}
+
+@media(max-width:768px){
+  .grid{
+    grid-template-columns:1fr;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>Form Registrasi Tamu</h1>
+
+<p class="subtitle">
+Silakan isi data sebelum memasuki area kerja
+</p>
+
+<div class="grid">
+
+<div class="input-group">
+<label>Nama Lengkap</label>
+<input type="text" id="nama">
+</div>
+
+<div class="input-group">
+<label>NIP / NIPP</label>
+<input type="text" id="nip">
+</div>
+
+<div class="input-group">
+<label>Asal Tamu</label>
+<input type="text" id="asal">
+</div>
+
+<div class="input-group">
+<label>Nomor HP</label>
+<input type="text" id="hp">
+</div>
+
+<div class="input-group">
+<label>Keperluan</label>
+
+<select id="keperluan">
+<option>Monitoring</option>
+<option>Maintenance</option>
+<option>Perbaikan</option>
+<option>Instalasi</option>
+<option>Audit</option>
+<option>Kunjungan</option>
+<option>Lainnya</option>
+</select>
+
+</div>
+
+<div class="input-group">
+<label>Email</label>
+<input type="email" id="email">
+</div>
+
+<div class="input-group full">
+<label>Upload Foto</label>
+<input type="file" id="foto">
+</div>
+
+</div>
+
+<button onclick="kirimData()">
+Kirim Permohonan
+</button>
+
+<div id="status" class="status"></div>
+
+</div>
+
+</div>
+
+<script>
+
+async function kirimData(){
+
+  document.getElementById("status").innerHTML =
+    "Permohonan sedang dikirim...";
+
+  // nanti POST ke API
+
+  setTimeout(() => {
+
+    document.getElementById("status").innerHTML =
+      "⏳ Data berhasil dikirim. Menunggu persetujuan admin.";
+
+  },1000)
+
+}
+
+</script>
+
+</body>
+</html>
