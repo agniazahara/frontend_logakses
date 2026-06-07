@@ -1118,7 +1118,10 @@ body.dark .modal-box input {
 }
 
 .menu-btn{
-  display:none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
 }
 
 @media (max-width:768px){

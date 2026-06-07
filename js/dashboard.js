@@ -856,9 +856,18 @@ async function rejectPermohonan(id) {
 
 function toggleSidebar(){
 
-  document
-    .querySelector(".sidebar")
-    .classList
-    .toggle("show")
+  const sidebar =
+    document.querySelector(".sidebar")
+
+  const btn =
+    document.getElementById("menuBtn")
+
+  sidebar.classList.toggle("show")
+
+  if(sidebar.classList.contains("show")){
+    btn.innerHTML = "✕"
+  }else{
+    btn.innerHTML = "☰"
+  }
 
 }
