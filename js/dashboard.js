@@ -794,7 +794,13 @@ async function approvePermohonan(id) {
     console.log(data)
 
     if (data.success) {
-      alert("Approve berhasil")
+      showToast(
+  "Permohonan berhasil diapprove",
+  "success"
+)
+  loadPermohonan()
+  tampilkanTamu()
+  updateStatistik()
     }
 
   } catch (err) {
