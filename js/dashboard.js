@@ -63,9 +63,26 @@ const username =
   localStorage.getItem("username")
 
 if (username) {
-  document.getElementById("namaAdmin").textContent =
-    username
-}
+
+    const namaAdmin =
+      document.getElementById("namaAdmin")
+
+    const dropName =
+      document.getElementById("dropName")
+
+    const settingNamaAdmin =
+      document.getElementById("settingNamaAdmin")
+
+    if (namaAdmin)
+      namaAdmin.textContent = username
+
+    if (dropName)
+      dropName.textContent = username
+
+    if (settingNamaAdmin)
+      settingNamaAdmin.textContent = username
+  }
+
 
   // LOAD DASHBOARD
   updateStatistik()
